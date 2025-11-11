@@ -1,0 +1,157 @@
+#!/bin/bash
+
+
+
+echo "================================"
+echo "NETWORK TROUBLESHOOTING TOOL"
+echo "================================"
+echo ""
+
+
+echo "Which server are you using?"
+echo "1) CentOS"
+echo "2) Fedora"
+echo ""
+echo "Enter your choice (1 or 2):"
+read server_choice
+
+
+echo ""
+echo "Selected: $server_name"
+echo ""
+
+# this shows troubleshooting menu
+echo "What issue are you experiencing?"
+echo "1) No Internet Connectivity"
+echo "2) Need to Set Static IP Address"
+echo "3) DNS Problems"
+echo "4) Trace Network Path"
+echo ""
+echo "Enter your choice (1-4):"
+read problem_choice
+
+echo ""
+echo "================================"
+
+# Handle each problem based on server type
+case $problem_choice in
+    1)
+        echo "TROUBLESHOOTING: No Internet Connectivity on $server_name"
+        echo "================================"
+        echo ""
+        echo "Step 1: Check if NetworkManager is running"
+        echo "Command: systemctl status NetworkManager"
+        echo ""
+        echo "Step 2: Check your network interface status"
+        echo "Command: ip addr show"
+        echo "Look for your interface (like enp0s3) and check if it has an IP address"
+        echo ""
+        echo "Step 3: Check your routing table"
+        echo "Command: ip route show"
+        echo "Look for a 'default via' line - that's your gateway"
+        echo ""
+        echo "Step 4: Test connectivity to gateway"
+        echo "Command: ping -c 4 [gateway-ip]"
+        echo ""
+        echo "Step 5: Test internet connectivity"
+        echo "Command: ping -c 4 8.8.8.8"
+        echo ""
+        if [ "$server_choice" = "1" ]
+        then
+            echo "CentOS Specific: Restart NetworkManager if needed"
+            echo "Command: sudo systemctl restart NetworkManager"
+        else
+            echo "Fedora Specific: Check firewall status"
+            echo "Command: sudo firewall-cmd --state"
+            echo "If firewall is blocking, you may need to adjust settings"
+        fi
+        ;;
+    
+    2)
+        echo "SETTING STATIC IP ADDRESS on $server_name"
+        echo "================================"
+        echo ""
+        echo "Step 1: Find your connection name"
+        echo "Command: nmcli connection show"
+        echo ""
+        echo "Step 2: Set the static IP (replace [connection] with your connection name)"
+        echo "Command: sudo nmcli con mod [connection] ipv4.addresses [IP]/[CIDR]"
+        echo "Example: sudo nmcli con mod 'Wired connection 1' ipv4.addresses 192.168.1.100/24"
+        echo ""
+        echo "Step 3: Set the gateway"
+        echo "Command: sudo nmcli con mod [connection] ipv4.gateway [gateway-ip]"
+        echo "Example: sudo nmcli con mod 'Wired connection 1' ipv4.gateway 192.168.1.1"
+        echo ""
+        echo "Step 4: Set DNS servers"
+        echo "Command: sudo nmcli con mod [connection] ipv4.dns '8.8.8.8 8.8.4.4'"
+        echo ""
+        echo "Step 5: Change from DHCP to manual"
+        echo "Command: sudo nmcli con mod [connection] ipv4.method manual"
+        echo ""
+        echo "Step 6: Restart the connection"
+        echo "Command: sudo nmcli con down [connection]"
+        echo "Command: sudo nmcli con up [connection]"
+        echo ""
+        ;;
+    
+    3)
+        echo "TROUBLESHOOTING: DNS Problems on $server_name"
+        echo "================================"
+        echo ""
+        echo "Step 1: Check current DNS configuration"
+        echo "Command: cat /etc/resolv.conf"
+        echo ""
+        echo "Step 2: Check DNS servers from NetworkManager"
+        echo "Command: nmcli dev show | grep DNS"
+        echo ""
+        if [ "$server_choice" = "2" ]
+        then
+            echo "Fedora Specific: Check systemd-resolved status"
+            echo "Command: resolvectl status"
+            echo ""
+        fi
+        echo "Step 3: Test DNS resolution"
+        echo "Command: nslookup google.com"
+        echo "or"
+        echo "Command: dig google.com"
+        echo ""
+        echo "Step 4: Test if it's a DNS issue vs connectivity issue"
+        echo "Command: ping -c 4 8.8.8.8"
+        echo "If this works but 'ping google.com' doesn't, it's a DNS problem"
+        echo ""
+        echo "Step 5: Try setting Google DNS temporarily"
+        echo "Command: sudo nmcli con mod [connection] ipv4.dns '8.8.8.8 8.8.4.4'"
+        echo "Command: sudo nmcli con down [connection]"
+        echo "Command: sudo nmcli con up [connection]"
+        ;;
+    
+    4)
+        echo "TRACING NETWORK PATH on $server_name"
+        echo "================================"
+        echo ""
+        echo "Traceroute shows the path your data takes to reach a destination."
+        echo ""
+        echo "Enter website to trace (e.g., google.com):"
+        read website
+        echo ""
+        echo "Running traceroute to $website..."
+        echo "This may take a minute..."
+        echo ""
+        traceroute "$website"
+        echo ""
+        echo "Each line shows a 'hop' through a router."
+        echo "If you see '* * *', that router is not responding to traceroute."
+        echo "The last successful hop before failure shows where the connection breaks."
+        ;;
+    
+    *)
+        echo "Invalid choice. Please run the script again and choose 1-4."
+        exit
+        ;;
+esac
+
+echo ""
+echo "================================"
+echo "Troubleshooting guidance complete."
+echo "================================"
+
