@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# This will get the date components
+set `date`
+
+#These are the positional parameters from date:
+# $1 = Day of week, $2 = Month, $3 = Day, $6 = Year
+
+
+filename="networkinfo_gabrielmor_$6-$2-$3.txt"
+outputdir="/home/gabrielmor/network_logs"
+
+# thiis will check and create output directory if it doesn't exist
+if [ ! -d "$outputdir" ]
+then
+    mkdir -p "$outputdir"
+fi
+
+
+outputfile="$outputdir/$filename"
+
+# Start writing to file (redirect > creates new file)
+echo "================================" > "$outputfile"
+echo "NETWORK INFORMATION REPORT" >> "$outputfile"
+echo "Generated: $1 $2 $3 $6" >> "$outputfile"
+echo "================================" >> "$outputfile"
+echo "" >> "$outputfile"
+
+
+echo "--- SYSTEM INFORMATION ---" >> "$outputfile"
+hostname >> "$outputfile"
+echo "" >> "$outputfile"
+cat /etc/os-release | grep "PRETTY_NAME" >> "$outputfile"
+echo "" >> "$outputfile"
+uname -r >> "$outputfile"
+echo "" >> "$outputfile"
+uptime >> "$outputfile"
+echo "" >> "$outputfile"
+
+# Gets Netwrok information
+echo "--- NETWORK INTERFACES ---" >> "$outputfile"
+ip addr show >> "$outputfile"
+echo "" >> "$outputfile"
+
+
+echo "--- ROUTING TABLE ---" >> "$outputfile"
+ip route show >> "$outputfile"
+echo "" >> "$outputfile"
+
+# DNS Configuration
+echo "--- DNS CONFIGURATION ---" >> "$outputfile"
+cat /etc/resolv.conf >> "$outputfile"
+echo "" >> "$outputfile"
+
+echo "--- NETWORK CONNECTIONS ---" >> "$outputfile"
+nmcli connection show >> "$outputfile"
+echo "" >> "$outputfile"
+
+# Here I am testing internet connection by pinging google dns server
+echo "Testing Internet (8.8.8.8)..." >> "$outputfile"
+ping -c 4 8.8.8.8 >> "$outputfile"
+echo "" >> "$outputfile"
+
+echo "Testing DNS Resolution (google.com)..." >> "$outputfile"
+ping -c 4 google.com >> "$outputfile"
+echo "" >> "$outputfile"
+
+# Active Connections
+echo "--- ACTIVE CONNECTIONS ---" >> "$outputfile"
+ss -tuln >> "$outputfile"
+echo "" >> "$outputfile"
+
+# Network Service Status
+echo "--- NETWORK SERVICE STATUS ---" >> "$outputfile"
+systemctl status NetworkManager >> "$outputfile"
+echo "" >> "$outputfile"
+
+# End of report
+echo "================================" >> "$outputfile"
+echo "END OF REPORT" >> "$outputfile"
+echo "================================" >> "$outputfile"
+
+echo "Network information has been saved to: $outputfile"
+echo ""
