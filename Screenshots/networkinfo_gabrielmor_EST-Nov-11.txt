@@ -1,0 +1,160 @@
+================================
+NETWORK INFORMATION REPORT
+Generated: Tue Nov 11 EST
+================================
+
+--- SYSTEM INFORMATION ---
+localhost.localdomain
+
+PRETTY_NAME="Fedora Linux 42 (Server Edition)"
+
+6.17.4-200.fc42.x86_64
+
+ 02:22:29 up 9 days, 10:34,  3 users,  load average: 0.03, 0.01, 0.00
+
+--- NETWORK INTERFACES ---
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:30:fc:d8 brd ff:ff:ff:ff:ff:ff
+    altname enx08002730fcd8
+    inet 192.168.1.218/24 brd 192.168.1.255 scope global dynamic noprefixroute enp0s3
+       valid_lft 48329sec preferred_lft 48329sec
+    inet6 2600:4040:57df:fb00:a00:27ff:fe30:fcd8/64 scope global dynamic noprefixroute
+       valid_lft 7161sec preferred_lft 7161sec
+    inet6 fe80::a00:27ff:fe30:fcd8/64 scope link noprefixroute
+       valid_lft forever preferred_lft forever
+
+--- ROUTING TABLE ---
+default via 192.168.1.1 dev enp0s3 proto dhcp src 192.168.1.218 metric 100
+192.168.1.0/24 dev enp0s3 proto kernel scope link src 192.168.1.218 metric 100
+
+--- DNS CONFIGURATION ---
+# This is /run/systemd/resolve/stub-resolv.conf managed by man:systemd-resolved(8).
+# Do not edit.
+#
+# This file might be symlinked as /etc/resolv.conf. If you're looking at
+# /etc/resolv.conf and seeing this text, you have followed the symlink.
+#
+# This is a dynamic resolv.conf file for connecting local clients to the
+# internal DNS stub resolver of systemd-resolved. This file lists all
+# configured search domains.
+#
+# Run "resolvectl status" to see details about the uplink DNS servers
+# currently in use.
+#
+# Third party programs should typically not access this file directly, but only
+# through the symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a
+# different way, replace this symlink by a static file or a different symlink.
+#
+# See man:systemd-resolved.service(8) for details about the supported modes of
+# operation for /etc/resolv.conf.
+
+nameserver 127.0.0.53
+options edns0 trust-ad
+search mynetworksettings.com
+
+--- NETWORK CONNECTIONS ---
+NAME    UUID                                  TYPE      DEVICE
+enp0s3  73312044-1beb-380f-86cf-60a7c6d1bfed  ethernet  enp0s3
+lo      ea19f723-0280-41d2-9606-11001992c201  loopback  lo
+
+--- FIREWALL STATUS ---
+running
+FedoraServer (default, active)
+  target: default
+  ingress-priority: 0
+  egress-priority: 0
+  icmp-block-inversion: no
+  interfaces: enp0s3
+  sources:
+  services: cockpit dhcpv6-client ssh
+  ports:
+  protocols:
+  forward: yes
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+
+--- CONNECTIVITY TESTS ---
+Testing Gateway...
+default via 192.168.1.1 dev enp0s3 proto dhcp src 192.168.1.218 metric 100
+
+Testing Internet (8.8.8.8)...
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=118 time=11.0 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=118 time=12.5 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=118 time=11.3 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=118 time=10.8 ms
+
+--- 8.8.8.8 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 10.795/11.387/12.508/0.671 ms
+
+Testing DNS Resolution (google.com)...
+PING google.com (2607:f8b0:4006:80b::200e) 56 data bytes
+64 bytes from lga34s34-in-x0e.1e100.net (2607:f8b0:4006:80b::200e): icmp_seq=1 ttl=118 time=9.14 ms
+64 bytes from lga34s34-in-x0e.1e100.net (2607:f8b0:4006:80b::200e): icmp_seq=2 ttl=118 time=10.2 ms
+64 bytes from lga34s34-in-x0e.1e100.net (2607:f8b0:4006:80b::200e): icmp_seq=3 ttl=118 time=10.9 ms
+64 bytes from lga34s34-in-x0e.1e100.net (2607:f8b0:4006:80b::200e): icmp_seq=4 ttl=118 time=11.9 ms
+
+--- google.com ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 9.139/10.531/11.867/0.991 ms
+
+--- ACTIVE CONNECTIONS ---
+Netid State  Recv-Q Send-Q                     Local Address:Port  Peer Address:Port
+udp   UNCONN 0      0                             127.0.0.54:53         0.0.0.0:*
+udp   UNCONN 0      0                          127.0.0.53%lo:53         0.0.0.0:*
+udp   UNCONN 0      0                                0.0.0.0:5353       0.0.0.0:*
+udp   UNCONN 0      0                                0.0.0.0:5355       0.0.0.0:*
+udp   UNCONN 0      0                              127.0.0.1:323        0.0.0.0:*
+udp   UNCONN 0      0      [fe80::a00:27ff:fe30:fcd8]%enp0s3:546           [::]:*
+udp   UNCONN 0      0                                   [::]:5353          [::]:*
+udp   UNCONN 0      0                                   [::]:5355          [::]:*
+udp   UNCONN 0      0                                  [::1]:323           [::]:*
+tcp   LISTEN 0      4096                           127.0.0.1:4040       0.0.0.0:*
+tcp   LISTEN 0      10                               0.0.0.0:27500      0.0.0.0:*
+tcp   LISTEN 0      128                              0.0.0.0:22         0.0.0.0:*
+tcp   LISTEN 0      4096                             0.0.0.0:5355       0.0.0.0:*
+tcp   LISTEN 0      4096                       127.0.0.53%lo:53         0.0.0.0:*
+tcp   LISTEN 0      4096                          127.0.0.54:53         0.0.0.0:*
+tcp   LISTEN 0      4096                                   *:9090             *:*
+tcp   LISTEN 0      128                                 [::]:22            [::]:*
+tcp   LISTEN 0      4096                                [::]:5355          [::]:*
+
+--- NETWORK SERVICE STATUS ---
+● NetworkManager.service - Network Manager
+     Loaded: loaded (/usr/lib/systemd/system/NetworkManager.service; enabled; preset: enabled)
+    Drop-In: /usr/lib/systemd/system/service.d
+             └─10-timeout-abort.conf
+     Active: active (running) since Sat 2025-11-01 16:47:56 EDT; 1 week 2 days ago
+ Invocation: 27f1c3683a784c17bcb6544bcdc767cf
+       Docs: man:NetworkManager(8)
+   Main PID: 799 (NetworkManager)
+      Tasks: 4 (limit: 2291)
+     Memory: 10.5M (peak: 11.3M)
+        CPU: 43.308s
+     CGroup: /system.slice/NetworkManager.service
+             └─799 /usr/bin/NetworkManager --no-daemon
+
+Nov 06 15:47:58 localhost.localdomain NetworkManager[799]: <info>  [1762462078.6759] dhcp4 (enp0s3): state changed new lease, address=192.168.1.218
+Nov 07 03:47:58 localhost.localdomain NetworkManager[799]: <info>  [1762505278.6529] dhcp4 (enp0s3): state changed new lease, address=192.168.1.218
+Nov 07 15:47:58 localhost.localdomain NetworkManager[799]: <info>  [1762548478.6552] dhcp4 (enp0s3): state changed new lease, address=192.168.1.218
+Nov 08 03:47:58 localhost.localdomain NetworkManager[799]: <info>  [1762591678.6571] dhcp4 (enp0s3): state changed new lease, address=192.168.1.218
+Nov 08 15:47:58 localhost.localdomain NetworkManager[799]: <info>  [1762634878.6808] dhcp4 (enp0s3): state changed new lease, address=192.168.1.218
+Nov 09 03:47:58 localhost.localdomain NetworkManager[799]: <info>  [1762678078.6704] dhcp4 (enp0s3): state changed new lease, address=192.168.1.218
+Nov 09 15:47:58 localhost.localdomain NetworkManager[799]: <info>  [1762721278.6636] dhcp4 (enp0s3): state changed new lease, address=192.168.1.218
+Nov 10 03:47:58 localhost.localdomain NetworkManager[799]: <info>  [1762764478.6871] dhcp4 (enp0s3): state changed new lease, address=192.168.1.218
+Nov 10 15:47:58 localhost.localdomain NetworkManager[799]: <info>  [1762807678.6660] dhcp4 (enp0s3): state changed new lease, address=192.168.1.218
+Nov 10 16:17:46 localhost.localdomain NetworkManager[799]: <info>  [1762809466.1924] policy: set-hostname: set hostname to 'localhost.localdomain' (no hostname found)
+
+================================
+END OF REPORT
+================================
